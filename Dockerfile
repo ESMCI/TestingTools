@@ -5,7 +5,7 @@
 ################################################################################################################
 
 # Use latest CentOS:
-FROM centos:stream9
+FROM centos:latest
 
 # First, we upate the default packages and install some other necessary ones - while this may give
 # some people updated versions of packages vs. others, these differences should not be numerically
