@@ -14,7 +14,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 # important or affect run-time behavior (eg, a newer Bash version, or perl-XML-LibXML version).
 RUN apt update
 
-RUN apt install -y file gfortran doxygen wget libjpeg-dev libz-dev cmake && \
+RUN apt install -y file gcc-c++ gfortran doxygen wget libjpeg-dev libz-dev cmake && \
     rm -fr /var/lib/apt/lists/* && \
     apt clean
 
