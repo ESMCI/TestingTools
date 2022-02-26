@@ -11,11 +11,11 @@ FROM ubuntu:latest
 # some people updated versions of packages vs. others, these differences should not be numerically
 # important or affect run-time behavior (eg, a newer Bash version, or perl-XML-LibXML version).
 
-RUN sudo gem install apt-spy2 && \
-    sudo apt-spy2 check && \
-    sudo apt-spy2 fix --commit && \
-    sudo apt-get update && \
-    sudo apt-get install gfortran doxygen wget libjpeg-dev libz-dev cmake
+RUN gem install apt-spy2 && \
+    apt-spy2 check && \
+    apt-spy2 fix --commit && \
+    apt-get update && \
+    apt-get install gfortran doxygen wget libjpeg-dev libz-dev cmake
 
 # Second, let's install MPI - we're doing this by hand because the default packages install into non-standard locations, and 
 # we want our image as simple as possible.  We're also going to use MPICH, though any of the MPICH ABI-compatible libraries 
