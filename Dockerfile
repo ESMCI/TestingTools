@@ -6,16 +6,17 @@
 
 # Use latest Ubuntu:
 FROM ubuntu:latest
+# Disable prompt
+ARG DEBIAN_FRONTEND=noninteractive
 
 # First, we upate the default packages and install some other necessary ones - while this may give
 # some people updated versions of packages vs. others, these differences should not be numerically
 # important or affect run-time behavior (eg, a newer Bash version, or perl-XML-LibXML version).
+RUN apt update
 
-RUN gem install apt-spy2 && \
-    apt-spy2 check && \
-    apt-spy2 fix --commit && \
-    apt-get update && \
-    apt-get install gfortran doxygen wget libjpeg-dev libz-dev cmake
+RUN apt install -y gfortran doxygen wget libjpeg-dev libz-dev cmake && \
+    rm -fr /var/lib/apt/lists/* && \
+    apt clean
 
 # Second, let's install MPI - we're doing this by hand because the default packages install into non-standard locations, and 
 # we want our image as simple as possible.  We're also going to use MPICH, though any of the MPICH ABI-compatible libraries 
