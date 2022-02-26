@@ -14,7 +14,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 # important or affect run-time behavior (eg, a newer Bash version, or perl-XML-LibXML version).
 RUN apt update
 
-RUN apt install -y gfortran doxygen wget libjpeg-dev libz-dev cmake && \
+RUN apt install -y file gfortran doxygen wget libjpeg-dev libz-dev cmake && \
     rm -fr /var/lib/apt/lists/* && \
     apt clean
 
@@ -27,7 +27,7 @@ RUN mkdir /tmp/sources && \
     wget -q http://www.mpich.org/static/downloads/3.4.3/mpich-3.4.3.tar.gz && \
     tar zxf mpich-3.4.3.tar.gz && \
     cd mpich-3.4.3 && \
-    ./configure --prefix=/usr/local && \
+    ./configure --with-device=ch3 --prefix=/usr/local && \
     make -j 2 install && \
     rm -rf /tmp/sources 
 
