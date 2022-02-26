@@ -40,7 +40,7 @@ RUN  mkdir /tmp/sources && \
      wget -q https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.12/hdf5-1.12.1/src/hdf5-1.12.1.tar.gz && \
      tar zxf hdf5-1.12.1.tar.gz && \
      cd hdf5-1.12.1 && \
-     ./configure --prefix=/usr/local && \
+     ./configure --prefix=/usr/local --disable-dap && \
      make -j 2 install && \
      cd /tmp/sources && \
      wget -q ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-c-4.7.4.tar.gz  && \
