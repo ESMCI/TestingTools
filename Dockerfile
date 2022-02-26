@@ -4,8 +4,8 @@
 # A base stream9 install + MPI, HDF5, NetCDF and PNetCDF, as well as other core packages for escomp containers #
 ################################################################################################################
 
-# Use latest CentOS:
-FROM centos:latest
+# Use latest Ubuntu:
+FROM ubuntu:latest
 
 # First, we upate the default packages and install some other necessary ones - while this may give
 # some people updated versions of packages vs. others, these differences should not be numerically
