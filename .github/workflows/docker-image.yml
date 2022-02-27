@@ -15,7 +15,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file Dockerfile \
+      run: docker build --file Dockerfile \
            --tag my-image-name:$(date +%s) \
            --build-arg HDF5_VERSION_MAJOR=1.10 \
-           --build-arg HDF5_VERSION_MINOR=8 
+           --build-arg HDF5_VERSION_MINOR=8 \
+           .
