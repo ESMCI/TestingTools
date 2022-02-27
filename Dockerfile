@@ -51,7 +51,7 @@ RUN  mkdir /tmp/sources && \
 
 ARG NETCDF_C_VERSION=4.7.4
 RUN  wget -q https://github.com/Unidata/netcdf-c/archive/refs/tags/v${NETCDF_C_VERSION}.tar.gz && \
-     tar -xzf v${NETCDF_C_VERSION}.tar.gz
+     tar -xzf v${NETCDF_C_VERSION}.tar.gz && \
      cd netcdf-c-${NETCDF_C_VERSION} && \
      ./configure --prefix=/usr/local --disable-dap && \
      make -j 2 install && \
@@ -59,7 +59,7 @@ RUN  wget -q https://github.com/Unidata/netcdf-c/archive/refs/tags/v${NETCDF_C_V
      cd /tmp/sources
 
 ARG NETCDF_F_VERSION=4.5.4
-RUN  wget -q  https://github.com/Unidata/netcdf-fortran/archive/refs/tags/v${NETCDF_F_VERSION}.tar.gz&& \
+RUN  wget -q  https://github.com/Unidata/netcdf-fortran/archive/refs/tags/v${NETCDF_F_VERSION}.tar.gz && \
      tar zxf v${NETCDF_F_VERSION}.tar.gz && \
      cd netcdf-fortran-${NETCDF_F_VERSION} && \
      ./configure --prefix=/usr/local && \
