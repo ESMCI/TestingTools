@@ -15,7 +15,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update
 
 RUN apt install -y file build-essential gfortran doxygen wget \
-                   curl libjpeg-dev libz-dev cmake && \
+                   m4 curl libjpeg-dev libz-dev cmake && \
     rm -fr /var/lib/apt/lists/* && \
     apt clean
 
