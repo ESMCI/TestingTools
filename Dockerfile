@@ -53,8 +53,8 @@ RUN  wget -q ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-c-4.7.4.tar.gz  && \
      ldconfig && \
      cd /tmp/sources
 
-RUN  wget -q ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-fortran-4.5.4.tar.gz && \
-     tar zxf netcdf-fortran-4.5.4.tar.gz && \
+RUN  wget -q  https://github.com/Unidata/netcdf-fortran/archive/refs/tags/v4.5.4.tar.gz&& \
+     tar zxf v4.5.4.tar.gz && \
      cd netcdf-fortran-4.5.4 && \
      ./configure --prefix=/usr/local && \
      make -j 2 install && \
