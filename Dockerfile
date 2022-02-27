@@ -43,22 +43,25 @@ RUN  mkdir /tmp/sources && \
      cd hdf5-1.12.1 && \
      ./configure --prefix=/usr/local --disable-dap && \
      make -j 2 install && \
-     cd /tmp/sources && \
-     wget -q ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-c-4.7.4.tar.gz  && \
+     cd /tmp/sources 
+
+RUN  wget -q ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-c-4.7.4.tar.gz  && \
      tar zxf netcdf-c-4.7.4.tar.gz && \
      cd netcdf-c-4.7.4 && \
      ./configure --prefix=/usr/local --disable-dap && \
      make -j 2 install && \
      ldconfig && \
-     cd /tmp/sources && \
-     wget -q ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-fortran-4.5.4.tar.gz && \
+     cd /tmp/sources
+
+RUN  wget -q ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-fortran-4.5.4.tar.gz && \
      tar zxf netcdf-fortran-4.5.4.tar.gz && \
      cd netcdf-fortran-4.5.4 && \
      ./configure --prefix=/usr/local && \
      make -j 2 install && \
      ldconfig && \
-     cd /tmp/sources && \
-     wget -q https://parallel-netcdf.github.io/Release/pnetcdf-1.12.3.tar.gz && \
+     cd /tmp/sources 
+
+RUN  wget -q https://parallel-netcdf.github.io/Release/pnetcdf-1.12.3.tar.gz && \
      tar zxf pnetcdf-1.12.3.tar.gz && \
      cd pnetcdf-1.12.3 && \
      ./configure --prefix=/usr/local && \
