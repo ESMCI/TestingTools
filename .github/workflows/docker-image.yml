@@ -14,12 +14,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install
-      run: |
-           sudo apt-get update 
-           sudo apt-get install docker
+#    - name: Install
+#      run: |
+#           sudo apt-get update 
+#           sudo apt-get install docker
     - name: Build the Docker image
-      run: docker build --file Dockerfile \
+      run: |
+           docker --version
+           docker build --file Dockerfile \
            --tag my-image-name:$(date +%s) \
            --build-arg HDF5_VERSION_MAJOR=1.10 \
            --build-arg HDF5_VERSION_MINOR=8 \
