@@ -23,9 +23,10 @@ RUN apt install -y file build-essential gfortran doxygen wget \
 # we want our image as simple as possible.  We're also going to use MPICH, though any of the MPICH ABI-compatible libraries 
 # will work.  This is for future compatibility with offloading to cloud.
 ARG MPI_VERSION=3.4.3
-RUN mkdir /tmp/sources && \
+RUN echo "Building mpich version ${MPI_VERSION}" && \
+    mkdir /tmp/sources && \
     cd /tmp/sources && \
-    wget -q http://www.mpich.org/static/downloads/${MPI_VERSION}/mpich-${MPI_VERSIN}.tar.gz && \
+    wget -q http://www.mpich.org/static/downloads/${MPI_VERSION}/mpich-${MPI_VERSION}.tar.gz && \
     tar zxf mpich-${MPI_VERSION}.tar.gz && \
     cd mpich-${MPI_VERSION} && \
     ./configure --with-device=ch3 --prefix=/usr/local && \
