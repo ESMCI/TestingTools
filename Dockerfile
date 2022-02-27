@@ -14,7 +14,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 # important or affect run-time behavior (eg, a newer Bash version, or perl-XML-LibXML version).
 RUN apt update
 
-RUN apt install -y file build-essential gfortran doxygen wget libjpeg-dev libz-dev cmake && \
+RUN apt install -y file build-essential gfortran doxygen wget \
+                   curl libjpeg-dev libz-dev cmake && \
     rm -fr /var/lib/apt/lists/* && \
     apt clean
 
@@ -46,7 +47,7 @@ RUN  mkdir /tmp/sources && \
      wget -q ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-c-4.7.4.tar.gz  && \
      tar zxf netcdf-c-4.7.4.tar.gz && \
      cd netcdf-c-4.7.4 && \
-     ./configure --prefix=/usr/local && \
+     ./configure --prefix=/usr/local --disable-dap && \
      make -j 2 install && \
      ldconfig && \
      cd /tmp/sources && \
