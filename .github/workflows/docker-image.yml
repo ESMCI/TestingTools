@@ -19,23 +19,36 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-    - name: Build the Docker image
-      run: |
-           docker --version
-           docker build --file Dockerfile \
-           --tag ${{ secrets.DOCKER_HUB_USERNAME }}/mpichbase:m3.4.3h1.10.8nc4.7.4nf4.5.4p1.12.3 \
-           --build-arg HDF5_VERSION_MAJOR=1.10 \
-           --build-arg HDF5_VERSION_MINOR=8 \
-           --build-arg NETCDF_C_VERSION=4.7.4 \
-           --build-arg NETCDF_F_VERSION=4.5.4 \
-           --build-arg PNETCDF_VERSION=1.12.3 \
-           --build-arg MPI_VERSION=3.4.3 \
-           .
-    - name: Publish
+#    - name: Build the Docker image
+#      run: |
+#           docker --version
+#           docker build --file Dockerfile \
+#           --tag ${{ secrets.DOCKER_HUB_USERNAME }}/mpichbase:m3.4.3h1.10.8nc4.7.4nf4.5.4p1.12.3 \
+#           --build-arg HDF5_VERSION_MAJOR=1.10 \
+#           --build-arg HDF5_VERSION_MINOR=8 \
+#           --build-arg NETCDF_C_VERSION=4.7.4 \
+#           --build-arg NETCDF_F_VERSION=4.5.4 \
+#           --build-arg PNETCDF_VERSION=1.12.3 \
+#           --build-arg MPI_VERSION=3.4.3 \
+#           .
+    - name: Build the base Docker image
       uses: docker/build-push-action@v2
       with:
-        context: ./
-        push: true
+        push: true	
         tags:  ${{ secrets.DOCKER_HUB_USERNAME }}/mpichbase:m3.4.3h1.10.8nc4.7.4nf4.5.4p1.12.3
-        cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/mpichbase:m3.4.3h1.10.8nc4.7.4nf4.5.4p1.12.3:buildcache
-        cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/mpichbase:m3.4.3h1.10.8nc4.7.4nf4.5.4p1.12.3:buildcache,mode=max
+        file: Dockerfile
+	build-args: |
+          HDF5_VERSION_MAJOR=1.10 
+          HDF5_VERSION_MINOR=8 
+          NETCDF_C_VERSION=4.7.4 
+          NETCDF_F_VERSION=4.5.4 
+          PNETCDF_VERSION=1.12.3 
+          MPI_VERSION=3.4.3 
+	  
+#    - name: Publish
+#      uses: docker/build-push-action@v2
+#      with:
+#        context: ./
+#        push: true
+#        cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/mpichbase:m3.4.3h1.10.8nc4.7.4nf4.5.4p1.12.3:buildcache
+#        cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/mpichbase:m3.4.3h1.10.8nc4.7.4nf4.5.4p1.12.3:buildcache,mode=max
