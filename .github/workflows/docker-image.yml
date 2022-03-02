@@ -31,7 +31,7 @@ jobs:
 #           --build-arg PNETCDF_VERSION=1.12.3 \
 #           --build-arg MPI_VERSION=3.4.3 \
 #           .
-    - name: Build the base Docker image
+    - name: Build the mpich hdf 1.10 Docker image
       uses: docker/build-push-action@v2
       with:
         push: true	
@@ -40,6 +40,20 @@ jobs:
         build-args: |
           HDF5_VERSION_MAJOR=1.10 
           HDF5_VERSION_MINOR=8 
+          NETCDF_C_VERSION=4.7.4 
+          NETCDF_F_VERSION=4.5.4 
+          PNETCDF_VERSION=1.12.3 
+          MPI_VERSION=3.4.3
+
+    - name: Build the mpich hdf 1.12 Docker image
+      uses: docker/build-push-action@v2
+      with:
+        push: true	
+        tags:  ${{ secrets.DOCKER_HUB_USERNAME }}/mpichbase:m3.4.3h1.12.1nc4.7.4nf4.5.4p1.12.3
+        file: Dockerfile
+        build-args: |
+          HDF5_VERSION_MAJOR=1.12
+          HDF5_VERSION_MINOR=1
           NETCDF_C_VERSION=4.7.4 
           NETCDF_F_VERSION=4.5.4 
           PNETCDF_VERSION=1.12.3 

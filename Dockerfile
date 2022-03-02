@@ -46,7 +46,7 @@ RUN  mkdir /tmp/sources && \
      wget -q https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${HDF5_VERSION_MAJOR}/hdf5-${HDF5_VERSION}/src/hdf5-${HDF5_VERSION}.tar.gz && \
      tar zxf hdf5-${HDF5_VERSION}.tar.gz && \
      cd hdf5-${HDF5_VERSION} && \
-     ./configure --prefix=/usr/local --disable-dap && \
+     ./configure --prefix=/usr/local --disable-dap --enable-parallel && \
      make -j 2 install && \
      cd /tmp/sources 
 
