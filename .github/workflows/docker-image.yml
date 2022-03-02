@@ -43,8 +43,8 @@ jobs:
           NETCDF_C_VERSION=4.7.4 
           NETCDF_F_VERSION=4.5.4 
           PNETCDF_VERSION=1.12.3 
-          MPI_VERSION=3.4.3 
-	  
+          MPI_VERSION=3.4.3
+
 #    - name: Publish
 #      uses: docker/build-push-action@v2
 #      with:
