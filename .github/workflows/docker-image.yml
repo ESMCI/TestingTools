@@ -26,7 +26,7 @@ jobs:
     - name: Installs
       run: |
         sudo apt-get update
-        sudo apt-get install python 
+        sudo apt-get install python3 
     - uses: actions/checkout@v2
     - name: Login to DockerHub
       uses: docker/login-action@v1
