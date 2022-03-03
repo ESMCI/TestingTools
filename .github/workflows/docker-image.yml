@@ -11,7 +11,18 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        mpich: [3.4.3, 4.0.1]
+        hdf5: [1.10, 1.12]
+        netcdfc: [4.7.4, 4.8.1]
+        netcdff: [4.5.4]
+        pnetcdf: [1.12.3]
+        include:
+          - hdf5: 1.10
+            hdf5m: 8
+          - hdf5: 1.12
+            hdf5m: 1
     steps:
     - uses: actions/checkout@v2
     - name: Login to DockerHub
@@ -19,50 +30,16 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-#    - name: Build the Docker image
-#      run: |
-#           docker --version
-#           docker build --file Dockerfile \
-#           --tag ${{ secrets.DOCKER_HUB_USERNAME }}/mpichbase:m3.4.3h1.10.8nc4.7.4nf4.5.4p1.12.3 \
-#           --build-arg HDF5_VERSION_MAJOR=1.10 \
-#           --build-arg HDF5_VERSION_MINOR=8 \
-#           --build-arg NETCDF_C_VERSION=4.7.4 \
-#           --build-arg NETCDF_F_VERSION=4.5.4 \
-#           --build-arg PNETCDF_VERSION=1.12.3 \
-#           --build-arg MPI_VERSION=3.4.3 \
-#           .
-    - name: Build the mpich hdf 1.10 Docker image
+    - name: Build the mpich Docker image
       uses: docker/build-push-action@v2
       with:
         push: true	
-        tags:  ${{ secrets.DOCKER_HUB_USERNAME }}/mpichbase:m3.4.3h1.10.8nc4.7.4nf4.5.4p1.12.3
+        tags:  ${{ secrets.DOCKER_HUB_USERNAME }}/m${{ matrix.mpich }}h${{ matrix.hdf5 }}nc${{ matrix.netcdfc }}nf${{ matrix.netcdff }}p${{ matrix.pnetcdf }}
         file: Dockerfile
         build-args: |
-          HDF5_VERSION_MAJOR=1.10 
-          HDF5_VERSION_MINOR=8 
-          NETCDF_C_VERSION=4.7.4 
-          NETCDF_F_VERSION=4.5.4 
-          PNETCDF_VERSION=1.12.3 
-          MPI_VERSION=3.4.3
-
-    - name: Build the mpich hdf 1.12 Docker image
-      uses: docker/build-push-action@v2
-      with:
-        push: true	
-        tags:  ${{ secrets.DOCKER_HUB_USERNAME }}/mpichbase:m3.4.3h1.12.1nc4.7.4nf4.5.4p1.12.3
-        file: Dockerfile
-        build-args: |
-          HDF5_VERSION_MAJOR=1.12
-          HDF5_VERSION_MINOR=1
-          NETCDF_C_VERSION=4.7.4 
-          NETCDF_F_VERSION=4.5.4 
-          PNETCDF_VERSION=1.12.3 
-          MPI_VERSION=3.4.3
-
-#    - name: Publish
-#      uses: docker/build-push-action@v2
-#      with:
-#        context: ./
-#        push: true
-#        cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/mpichbase:m3.4.3h1.10.8nc4.7.4nf4.5.4p1.12.3:buildcache
-#        cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/mpichbase:m3.4.3h1.10.8nc4.7.4nf4.5.4p1.12.3:buildcache,mode=max
+          HDF5_VERSION_MAJOR=${{ matrix.hdf5 }}
+          HDF5_VERSION_MINOR=${{ matrix.hdf5m }}
+          NETCDF_C_VERSION=${{ matrix.netcdfc }}
+          NETCDF_F_VERSION=${{ matrix.netcdff }}
+          PNETCDF_VERSION=${{ matrix.pnetcdf }}
+          MPI_VERSION=${{ matrix.mpich }}
