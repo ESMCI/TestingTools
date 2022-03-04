@@ -38,7 +38,7 @@ jobs:
       with:
         push: true	
         tags:  ${{ secrets.DOCKER_HUB_USERNAME }}/m${{ matrix.mpich }}h${{ matrix.hdf5 }}nc${{ matrix.netcdfc }}nf${{ matrix.netcdff }}p${{ matrix.pnetcdf }}
-        file: Dockerfile
+        file: Dockerfile.mpich
         build-args: |
           HDF5_VERSION_MAJOR=${{ matrix.hdf5 }}
           HDF5_VERSION_MINOR=${{ matrix.hdf5m }}
