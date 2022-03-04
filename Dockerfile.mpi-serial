@@ -27,7 +27,7 @@ RUN echo "Building mpi-serial version ${MPI_VERSION}" && \
     cd /tmp/sources && \
     wget -q https://github.com/MCSclimate/mpi-serial/archive/refs/tags/MPIserial_${MPI_VERSION}.tar.gz && \
     tar zxf MPIserial-${MPI_VERSION}.tar.gz && \
-    cd MPIserial-${MPI_VERSION} && \
+    cd mpi-serial-MPIserial_${MPI_VERSION} && \
     ./configure --prefix=/usr/local && \
     make -j 2 install && \
     rm -rf /tmp/sources 
