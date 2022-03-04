@@ -29,9 +29,9 @@ RUN echo "Building mpi-serial version ${MPI_VERSION}" && \
     tar zxf MPIserial_${MPI_VERSION}.tar.gz && \
     cd mpi-serial-MPIserial_${MPI_VERSION} && \
     ./configure --prefix=/usr/local && \
-    make -j 2 install && \
-    rm -rf /tmp/sources 
-
+    make -j 2 && \
+    cp libmpi-serial.a /usr/local/lib && \
+    cp mpi.h mpif.h mpi.mod /usr/local/include
 
 # Next, let's install HDF5, and NetCDF  - we'll do this by hand, since the packaged versions have 
 # lots of extra dependencies (at least, as of CentOS 7) and this also lets us control their location (eg, put in /usr/local).
@@ -65,5 +65,7 @@ RUN  wget -q  https://github.com/Unidata/netcdf-fortran/archive/refs/tags/v${NET
      ./configure --prefix=/usr/local && \
      make -j 2 install && \
      ldconfig && \
-     cd /tmp/sources 
+     cd && \
+     rm -rf /tmp/sources 
+
 
