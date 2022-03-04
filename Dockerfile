@@ -16,7 +16,7 @@ RUN apt update
 
 RUN apt install -y file build-essential gfortran doxygen wget \
                    m4 curl libjpeg-dev libz-dev cmake python3 \
-                   autotoools-dev autoconf && \
+                   autotools-dev autoconf && \
     rm -fr /var/lib/apt/lists/* && \
     apt clean
 
