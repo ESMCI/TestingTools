@@ -55,6 +55,7 @@ RUN  mkdir /tmp/sources && \
      make -j 2 install && \
      cd /tmp/sources 
 
+ENV LDFLAGS -L/usr/local/lib
 ARG NETCDF_C_VERSION=4.7.4
 RUN  wget -q https://github.com/Unidata/netcdf-c/archive/refs/tags/v${NETCDF_C_VERSION}.tar.gz && \
      tar -xzf v${NETCDF_C_VERSION}.tar.gz && \
@@ -64,6 +65,7 @@ RUN  wget -q https://github.com/Unidata/netcdf-c/archive/refs/tags/v${NETCDF_C_V
      ldconfig && \
      cd /tmp/sources
 
+ENV LDFLAGS -L/usr/local/lib
 ARG NETCDF_F_VERSION=4.5.4
 RUN  wget -q  https://github.com/Unidata/netcdf-fortran/archive/refs/tags/v${NETCDF_F_VERSION}.tar.gz && \
      tar zxf v${NETCDF_F_VERSION}.tar.gz && \
@@ -73,6 +75,7 @@ RUN  wget -q  https://github.com/Unidata/netcdf-fortran/archive/refs/tags/v${NET
      ldconfig && \
      cd /tmp/sources 
 
+ENV LDFLAGS -L/usr/local/lib
 ARG  PNETCDF_VERSION=1.12.3
 RUN  wget -q https://parallel-netcdf.github.io/Release/pnetcdf-${PNETCDF_VERSION}.tar.gz && \
      tar zxf pnetcdf-${PNETCDF_VERSION}.tar.gz && \
