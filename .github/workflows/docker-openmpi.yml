@@ -10,20 +10,21 @@ jobs:
   check_file_changed:
     runs-on: ubuntu-latest
     outputs:
-      changed: ${{ steps.set-output.outputs.modified_files }}
+      changed: ${{ steps.files.outputs.modified }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Get changed files
-        uses: tj-actions/changed-files@v17.2
-        id: verify-changed-files
-        with:
-          files_separator: " "
-          files: |
-            ./Dockerfile.openmpi ./.github/workflow/docker-openmpi.yml
+        id: files
+        uses: jitterbit/get-changed-files@v1
+      - run: |
+          for changed_file in ${{ steps.files.outputs.modified }}; do
+            echo "file ${changed_file} has changed."
+          done
+          
       - name: Files changed
         id: set-output
-        run: echo "::set-output name=changed::${{ steps.changed-files.outputs.modified_files }}"
+        run: echo "::set-output name=changed::${{ steps.files.outputs.modified }}"
   build:
     runs-on: ubuntu-latest
     needs: check_file_changed
