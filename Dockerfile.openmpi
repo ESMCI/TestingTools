@@ -40,7 +40,7 @@ RUN echo "Building openmpi version ${MPI_VERSION}" && \
 # Next, let's install HDF5, NetCDF and PNetCDF - we'll do this by hand, since the packaged versions have 
 # lots of extra dependencies (at least, as of CentOS 7) and this also lets us control their location (eg, put in /usr/local).
 # NOTE: We do want to change where we store the versions / download links, so it's easier to change, but that'll happen later.
-
+ENV PATH "/usr/local/bin:${PATH}"
 ENV LDFLAGS -L/usr/local/lib
 ARG HDF5_VERSION_MAJOR=1.12
 ARG HDF5_VERSION_MINOR=1
