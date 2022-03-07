@@ -42,6 +42,8 @@ RUN echo "Building openmpi version ${MPI_VERSION}" && \
 # NOTE: We do want to change where we store the versions / download links, so it's easier to change, but that'll happen later.
 ENV PATH "/usr/local/bin:${PATH}"
 ENV LDFLAGS -L/usr/local/lib
+ENV CC mpicc
+ENV FC mpif90
 ARG HDF5_VERSION_MAJOR=1.12
 ARG HDF5_VERSION_MINOR=1
 ARG HDF5_VERSION=${HDF5_VERSION_MAJOR}.${HDF5_VERSION_MINOR}
@@ -58,6 +60,7 @@ RUN  mkdir /tmp/sources && \
 ENV LDFLAGS -L/usr/local/lib
 ARG NETCDF_C_VERSION=4.7.4
 RUN  wget -q https://github.com/Unidata/netcdf-c/archive/refs/tags/v${NETCDF_C_VERSION}.tar.gz && \
+     ls /usr/local/lib && \
      tar -xzf v${NETCDF_C_VERSION}.tar.gz && \
      cd netcdf-c-${NETCDF_C_VERSION} && \
      ./configure --prefix=/usr/local --disable-dap && \
