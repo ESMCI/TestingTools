@@ -18,9 +18,9 @@ jobs:
         uses: tj-actions/changed-files@v17.2
         id: verify-changed-files
         with:
+          files_separator: " "
           files: |
-            ./Dockerfile.openmpi
-            ./.github/workflow/docker-openmpi.yml
+            ./Dockerfile.openmpi ./.github/workflow/docker-openmpi.yml
       - name: Files changed
         id: set-output
         run: echo "::set-output name=changed::${{ steps.changed-files.outputs.modified_files }}"
