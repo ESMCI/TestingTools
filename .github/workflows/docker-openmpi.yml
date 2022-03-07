@@ -19,8 +19,8 @@ jobs:
         id: verify-changed-files
         with:
           files: |
-            Dockerfile.openmpi
-            .github/workflow/docker-openmpi.yml
+            ${GITHUB_WORKSPACE}/Dockerfile.openmpi
+            ${GITHUB_WORKSPACE}/.github/workflow/docker-openmpi.yml
       - name: Files changed
         id: set-output
         run: echo "::set-output name=changed::${{ steps.verify-changed-files.outputs.files_changed }}"
