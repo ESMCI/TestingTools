@@ -28,7 +28,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: check_file_changed
-    if: contains(check_file_changed.files.outputs.modified, 'openmpi')
+    if: contains(steps.files.outputs.modified, 'openmpi')
     strategy:
       matrix:
         openmpi: [3.1.6, 4.1.2]
