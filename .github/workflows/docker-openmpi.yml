@@ -25,6 +25,7 @@ jobs:
       - name: Files changed
         id: set-output
         run: echo "::set-output name=changed::${{ steps.files.outputs.modified }}"
+
   build:
     runs-on: ubuntu-latest
     needs: check_file_changed
