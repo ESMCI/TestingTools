@@ -1,0 +1,55 @@
+name: Docker Image CI for CSEG Tools
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        openmpi: [3.1.6, 4.1.2]
+        # 1.10 needs to be a string or the trailing 0 is lost
+        hdf5: ["1.10", "1.12"]
+        netcdfc: [4.7.4, 4.8.1]
+        netcdff: [4.5.4]
+        pnetcdf: [1.12.3]
+        include:
+          - hdf5: "1.10"
+            hdf5m: 8
+          - hdf5: "1.12"
+            hdf5m: 1
+          - openmpi: 3.1.6
+            openmpi_major: 3.1
+            openmpi_minor: 6
+          - openmpi: 4.1.2
+            openmpi_major: 4.1
+            openmpi_minor: 2
+    steps:
+    - name: Installs
+      run: |
+        python3 --version
+    - uses: actions/checkout@v2
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+    - name: Build the mpich Docker image
+      uses: docker/build-push-action@v2
+      with:
+        push: true	
+        tags:  ${{ secrets.DOCKER_HUB_USERNAME }}/o${{ matrix.openmpi }}h${{ matrix.hdf5 }}nc${{ matrix.netcdfc }}nf${{ matrix.netcdff }}p${{ matrix.pnetcdf }}
+        file: Dockerfile.openmpi
+        build-args: |
+          HDF5_VERSION_MAJOR=${{ matrix.hdf5 }}
+          HDF5_VERSION_MINOR=${{ matrix.hdf5m }}
+          NETCDF_C_VERSION=${{ matrix.netcdfc }}
+          NETCDF_F_VERSION=${{ matrix.netcdff }}
+          PNETCDF_VERSION=${{ matrix.pnetcdf }}
+          MPI_VERSION_MAJOR=${{ matrix.openmpi_major }}
+          MPI_VERSION_MINOR=${{ matrix.openmpi_minor }}
