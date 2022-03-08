@@ -66,12 +66,12 @@ RUN  wget -q https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${HDF5_VERSION_
      cd /tmp/sources 
 
 ARG NETCDF_C_VERSION=4.7.4
-ENV CPPFLAGS -I/usr/local/serial/include
-ENV LD_LIBRARY_PATH /usr/local/serial/lib
-ENV PATH "/usr/local/serial/bin:$PATH"
 RUN  wget -q https://github.com/Unidata/netcdf-c/archive/refs/tags/v${NETCDF_C_VERSION}.tar.gz && \
      tar -xzf v${NETCDF_C_VERSION}.tar.gz && \
      cd netcdf-c-${NETCDF_C_VERSION} && \
+     CPPFLAGS="-I /usr/local/serial/include"  \
+     LDFLAGS="-L/usr/local/serial/lib "  \
+     LD_LIBRARY_PATH="/usr/local/serial/lib " \
      ./configure --prefix=/usr/local/serial --disable-dap && \
      make -j 2 install && \
      ldconfig && \
@@ -82,6 +82,8 @@ ENV LD_LIBRARY_PATH /usr/local/parallel/lib
 ENV CPPFLAGS -I/usr/local/parallel/include
 RUN  cd netcdf-c-${NETCDF_C_VERSION} && \
      make clean && \
+     CPPFLAGS="-I /usr/local/parallel/include"  \
+     LDFLAGS="-L/usr/local/parallel/lib "  \
      ./configure --prefix=/usr/local/parallel --disable-dap && \
      make -j 2 install && \
      ldconfig && \
