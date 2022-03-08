@@ -32,7 +32,8 @@ RUN echo "Building mpich version ${MPI_VERSION}" && \
     cd mpich-${MPI_VERSION} && \
     ./configure --with-device=ch3 --prefix=/usr/local/parallel && \
     make -j 2 install && \
-    rm -rf /tmp/sources 
+    cd /tmp/sources && \
+    rm -rf /tmp/sources/mpich-${MPI_VERSION} 
 
 # Next, let's install HDF5, NetCDF and PNetCDF - we'll do this by hand 
 # this lets us control their location (eg, put in /usr/local).
@@ -42,21 +43,19 @@ ARG HDF5_VERSION_MAJOR=1.12
 ARG HDF5_VERSION_MINOR=1
 ARG HDF5_VERSION=${HDF5_VERSION_MAJOR}.${HDF5_VERSION_MINOR}
 ENV PATH "/usr/local/serial/bin:$PATH"
-RUN  mkdir /tmp/sources && \
-     cd /tmp/sources && \
+RUN 
      wget -q https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${HDF5_VERSION_MAJOR}/hdf5-${HDF5_VERSION}/src/hdf5-${HDF5_VERSION}.tar.gz && \
      tar zxf hdf5-${HDF5_VERSION}.tar.gz && \
      cd hdf5-${HDF5_VERSION} && \
      ./configure --prefix=/usr/local/serial  --disable-parallel && \
      make -j 2 install && \
-     cd /tmp/sources && \
-     rm -fr hdf5-${HDF5_VERSION} 
+     cd /tmp/sources/  && \
+     rm -fr /tmp/sources/hdf5-${HDF5_VERSION} 
 
-ARG HDF5_VERSION_MAJOR=1.12
-ARG HDF5_VERSION_MINOR=1
 ARG HDF5_VERSION=${HDF5_VERSION_MAJOR}.${HDF5_VERSION_MINOR}
 ENV PATH "/usr/local/parallel/bin:$PATH"
-RUN  tar zxf hdf5-${HDF5_VERSION}.tar.gz && \ 
+RUN  wget -q https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${HDF5_VERSION_MAJOR}/hdf5-${HDF5_VERSION}/src/hdf5-${HDF5_VERSION}.tar.gz && \
+     tar zxf hdf5-${HDF5_VERSION}.tar.gz && \ 
      cd hdf5-${HDF5_VERSION} && \
      ./configure --prefix=/usr/local/parallel  --enable-parallel && \
      make -j 2 install && \
@@ -81,7 +80,6 @@ RUN  wget -q  https://github.com/Unidata/netcdf-fortran/archive/refs/tags/v${NET
      ldconfig && \
      cd /tmp/sources 
 
-ARG NETCDF_C_VERSION=4.7.4
 ENV PATH "/usr/local/parallel/bin:$PATH"
 RUN  cd netcdf-c-${NETCDF_C_VERSION} && \
      make clean && \
@@ -90,7 +88,6 @@ RUN  cd netcdf-c-${NETCDF_C_VERSION} && \
      ldconfig && \
      cd /tmp/sources
 
-ARG NETCDF_F_VERSION=4.5.4
 RUN  cd netcdf-fortran-${NETCDF_F_VERSION} && \
      make clean && \
      ./configure --prefix=/usr/local/parallel && \
