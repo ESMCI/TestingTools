@@ -42,6 +42,7 @@ RUN echo "Building openmpi version ${MPI_VERSION}" && \
 # NOTE: We do want to change where we store the versions / download links, so it's easier to change, but that'll happen later.
 ENV PATH "/usr/local/bin:${PATH}"
 ENV LDFLAGS -L/usr/local/lib
+ENV LD_LIBRARY_PATH /usr/local/lib
 ENV CC mpicc
 ENV FC mpif90
 ARG HDF5_VERSION_MAJOR=1.12
