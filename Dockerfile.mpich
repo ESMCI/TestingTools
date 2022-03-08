@@ -84,6 +84,7 @@ RUN  cd netcdf-c-${NETCDF_C_VERSION} && \
      make clean && \
      CPPFLAGS="-I /usr/local/parallel/include"  \
      LDFLAGS="-L/usr/local/parallel/lib "  \
+     LD_LIBRARY_PATH="/usr/local/parallel/lib " \
      ./configure --prefix=/usr/local/parallel --disable-dap && \
      make -j 2 install && \
      ldconfig && \
@@ -93,7 +94,9 @@ ENV NETCDF_F_VERSION=4.5.4
 RUN  wget -q  https://github.com/Unidata/netcdf-fortran/archive/refs/tags/v${NETCDF_F_VERSION}.tar.gz && \
      tar zxf v${NETCDF_F_VERSION}.tar.gz && \
      cd netcdf-fortran-${NETCDF_F_VERSION} && \
-     make clean && \
+     CPPFLAGS="-I /usr/local/parallel/include"  \
+     LDFLAGS="-L/usr/local/parallel/lib "  \
+     LD_LIBRARY_PATH="/usr/local/parallel/lib " \
      ./configure --prefix=/usr/local/parallel && \
      make -j 2 install && \
      ldconfig && \
