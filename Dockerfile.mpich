@@ -47,17 +47,12 @@ RUN  mkdir /tmp/sources && \
      tar zxf hdf5-${HDF5_VERSION}.tar.gz && \
      cd hdf5-${HDF5_VERSION} && \
      ./configure --prefix=/usr/local/serial  --disable-parallel && \
-     make -j 2 install && \
-     cd /tmp/sources 
+     make -j 2 install 
 
 ARG HDF5_VERSION_MAJOR=1.12
 ARG HDF5_VERSION_MINOR=1
 ARG HDF5_VERSION=${HDF5_VERSION_MAJOR}.${HDF5_VERSION_MINOR}
-RUN  mkdir /tmp/sources && \
-     cd /tmp/sources && \
-     wget -q https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${HDF5_VERSION_MAJOR}/hdf5-${HDF5_VERSION}/src/hdf5-${HDF5_VERSION}.tar.gz && \
-     tar zxf hdf5-${HDF5_VERSION}.tar.gz && \
-     cd hdf5-${HDF5_VERSION} && \
+RUN  make clean && \
      ./configure --prefix=/usr/local/parallel  --enable-parallel && \
      make -j 2 install && \
      cd /tmp/sources 
@@ -81,18 +76,16 @@ RUN  wget -q  https://github.com/Unidata/netcdf-fortran/archive/refs/tags/v${NET
      cd /tmp/sources 
 
 ARG NETCDF_C_VERSION=4.7.4
-RUN  wget -q https://github.com/Unidata/netcdf-c/archive/refs/tags/v${NETCDF_C_VERSION}.tar.gz && \
-     tar -xzf v${NETCDF_C_VERSION}.tar.gz && \
-     cd netcdf-c-${NETCDF_C_VERSION} && \
+RUN  cd netcdf-c-${NETCDF_C_VERSION} && \
+     make clean && \
      ./configure --prefix=/usr/local/parallel --disable-dap && \
      make -j 2 install && \
      ldconfig && \
      cd /tmp/sources
 
 ARG NETCDF_F_VERSION=4.5.4
-RUN  wget -q  https://github.com/Unidata/netcdf-fortran/archive/refs/tags/v${NETCDF_F_VERSION}.tar.gz && \
-     tar zxf v${NETCDF_F_VERSION}.tar.gz && \
-     cd netcdf-fortran-${NETCDF_F_VERSION} && \
+RUN  cd netcdf-fortran-${NETCDF_F_VERSION} && \
+     make clean && \
      ./configure --prefix=/usr/local/parallel && \
      make -j 2 install && \
      ldconfig && \
