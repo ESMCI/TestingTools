@@ -14,8 +14,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 # important or affect run-time behavior (eg, a newer Bash version, or perl-XML-LibXML version).
 RUN apt update
 
-RUN apt install -y file build-essential doxygen wget \
-                   m4 curl libjpeg-dev libz-dev cmake python3 \
+RUN apt install -y file doxygen wget \
+                   m4 curl libjpeg-dev libz-dev \
                    libtool autotools-dev autoconf ssh && \
     rm -fr /var/lib/apt/lists/* && \
     apt clean
@@ -26,8 +26,10 @@ RUN apt install -y file build-essential doxygen wget \
 ENV PATH "/usr/local/bin:${PATH}"
 ENV LDFLAGS -L/usr/local/lib
 ENV LD_LIBRARY_PATH /usr/local/lib
-ENV CC mpiicc
-ENV FC mpiifort
+ENV CC mpicc
+ENV FC mpifc
+ENV I_MPI_CC=icc
+ENV I_MPI_FC=ifort
 ARG HDF5_VERSION_MAJOR=1.12
 ARG HDF5_VERSION_MINOR=1
 ARG HDF5_VERSION=${HDF5_VERSION_MAJOR}.${HDF5_VERSION_MINOR}
@@ -38,7 +40,6 @@ RUN  mkdir /tmp/sources && \
      cd hdf5-${HDF5_VERSION} && \
      ./configure --prefix=/usr/local --enable-parallel && \
      test $? -eq 0 && echo "Success" || cat config.log && \
-     ls /usr/local/lib && \
      make -j 2 install && \
      cd /tmp/sources 
 
@@ -60,6 +61,7 @@ RUN  wget -q  https://github.com/Unidata/netcdf-fortran/archive/refs/tags/v${NET
      cd netcdf-fortran-${NETCDF_F_VERSION} && \
      ./configure --prefix=/usr/local && \
      test $? -eq 0 && echo "configure worked" || cat config.log && \
+     echo $LD_LIBRARY_PATH && \
      make -j 2 install && \
      ldconfig && \
      cd /tmp/sources 
