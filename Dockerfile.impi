@@ -25,7 +25,7 @@ RUN apt install -y file doxygen wget \
 # NOTE: We do want to change where we store the versions / download links, so it's easier to change, but that'll happen later.
 ENV PATH "/usr/local/bin:${PATH}"
 ENV LDFLAGS -L/usr/local/lib
-ENV LD_LIBRARY_PATH /usr/local/lib
+ENV LD_LIBRARY_PATH "/usr/local/lib:${LD_LIBRARY_PATH}"
 ENV CC mpicc
 ENV FC mpifc
 ENV I_MPI_CC=icc
@@ -61,7 +61,6 @@ RUN  wget -q  https://github.com/Unidata/netcdf-fortran/archive/refs/tags/v${NET
      cd netcdf-fortran-${NETCDF_F_VERSION} && \
      ./configure --prefix=/usr/local && \
      test $? -eq 0 && echo "configure worked" || cat config.log && \
-     echo $LD_LIBRARY_PATH && \
      make -j 2 install && \
      ldconfig && \
      cd /tmp/sources 
