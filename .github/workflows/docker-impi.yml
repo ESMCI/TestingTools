@@ -56,7 +56,8 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true	
-        tags:  ${{ secrets.DOCKER_HUB_USERNAME }}/o${{ matrix.openmpi }}h${{ matrix.hdf5 }}nc${{ matrix.netcdfc }}nf${{ matrix.netcdff }}p${{ matrix.pnetcdf }}
+        # need impi version here
+        tags:  ${{ secrets.DOCKER_HUB_USERNAME }}/impi_h${{ matrix.hdf5 }}nc${{ matrix.netcdfc }}nf${{ matrix.netcdff }}p${{ matrix.pnetcdf }}
         file: Dockerfile.impi
         build-args: |
           HDF5_VERSION_MAJOR=${{ matrix.hdf5 }}
@@ -64,5 +65,3 @@ jobs:
           NETCDF_C_VERSION=${{ matrix.netcdfc }}
           NETCDF_F_VERSION=${{ matrix.netcdff }}
           PNETCDF_VERSION=${{ matrix.pnetcdf }}
-          MPI_VERSION_MAJOR=${{ matrix.openmpi_major }}
-          MPI_VERSION_MINOR=${{ matrix.openmpi_minor }}

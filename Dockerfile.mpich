@@ -102,6 +102,8 @@ RUN  wget -q  https://github.com/Unidata/netcdf-fortran/archive/refs/tags/v${NET
      ldconfig && \
      cd /tmp/sources 
 
+ENV CFLAGS -fPIC
+ENV LDFLAGS "-fPIC -L/usr/local/parallel/lib"
 ARG  PNETCDF_VERSION=1.12.3
 RUN  wget -q https://parallel-netcdf.github.io/Release/pnetcdf-${PNETCDF_VERSION}.tar.gz && \
      tar zxf pnetcdf-${PNETCDF_VERSION}.tar.gz && \
