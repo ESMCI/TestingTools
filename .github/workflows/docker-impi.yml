@@ -10,7 +10,7 @@ jobs:
   check_file_changed:
     runs-on: ubuntu-latest
     outputs:
-      changed: ${{ steps.files.outputs.modified }}
+      changed: ${{ steps.files.outputs.added_modified }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -18,13 +18,13 @@ jobs:
         id: files
         uses: jitterbit/get-changed-files@v1
       - run: |
-          for changed_file in ${{ steps.files.outputs.modified }}; do
+          for changed_file in ${{ steps.files.outputs.added_modified }}; do
             echo "file ${changed_file} has changed."
           done
           
       - name: Files changed
         id: set-output
-        run: echo "::set-output name=changed::${{ steps.files.outputs.modified }}"
+        run: echo "::set-output name=changed::${{ steps.files.outputs.added_modified }}"
 
   build:
     runs-on: ubuntu-latest
