@@ -26,8 +26,8 @@ RUN apt install -y file build-essential doxygen wget \
 ENV PATH "/usr/local/bin:${PATH}"
 ENV LDFLAGS -L/usr/local/lib
 ENV LD_LIBRARY_PATH /usr/local/lib
-ENV CC mpicc
-ENV FC mpif90
+ENV CC mpiicc
+ENV FC mpiifort
 ARG HDF5_VERSION_MAJOR=1.12
 ARG HDF5_VERSION_MINOR=1
 ARG HDF5_VERSION=${HDF5_VERSION_MAJOR}.${HDF5_VERSION_MINOR}
