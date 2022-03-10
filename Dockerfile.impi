@@ -76,12 +76,9 @@ RUN  wget -q https://parallel-netcdf.github.io/Release/pnetcdf-${PNETCDF_VERSION
      ldconfig && \
      rm -rf /tmp/sources
 
-#RUN groupadd escomp && \
-#    useradd -c 'ESCOMP User' -d /home/user -g escomp -m -s /bin/bash user && \
-#    echo 'export USER=$(whoami)' >> /etc/profile.d/escomp.sh && \
-#    echo 'export PS1="[\u@escomp \W]\$ "' >> /etc/profile.d/escomp.sh && \
-#    echo 'user ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/escomp
-#
+RUN groupadd ziggy && \
+    useradd  -d /home/ziggy -g ziggy -m -s /bin/bash ziggy -u 1001 
+
 #ENV SHELL=/bin/bash \
 #    LANG=C.UTF-8  \
 #    LC_ALL=C.UTF-8
