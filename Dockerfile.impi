@@ -14,7 +14,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 # important or affect run-time behavior (eg, a newer Bash version, or perl-XML-LibXML version).
 RUN apt update
 
-RUN apt install -y file doxygen wget git sudo \
+RUN apt install -y file doxygen wget git sudo vim \
                    m4 curl libjpeg-dev libz-dev \
                    libtool autotools-dev autoconf ssh && \
     rm -fr /var/lib/apt/lists/* && \
@@ -80,10 +80,7 @@ RUN mkdir -p /home/ziggy && \
     groupadd ziggy && \
     useradd  -d /home/ziggy -g ziggy -m -s /bin/bash ziggy -u 1001 && \
     echo 'export USER=$(whoami)' >> /etc/profile.d/ziggy.sh && \
-    echo 'user ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/ziggy && \
-    echo 'export PATH=$PATH' >> /home/ziggy/.bashrc && \
-    echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH' >> /home/ziggy/.bashrc && \
-    chown ziggy:ziggy /home/ziggy/.bashrc
+    echo 'user ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/ziggy 
     
 #ENV SHELL=/bin/bash \
 #    LANG=C.UTF-8  \
