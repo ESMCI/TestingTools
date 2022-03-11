@@ -76,12 +76,11 @@ RUN  wget -q https://parallel-netcdf.github.io/Release/pnetcdf-${PNETCDF_VERSION
      ldconfig && \
      rm -rf /tmp/sources
 
-RUN mkdir -p /home/ziggy && \
-    groupadd ziggy && \
+RUN groupadd ziggy && \
     useradd  -d /home/ziggy -g ziggy -m -s /bin/bash ziggy -u 1001 && \
     echo 'export USER=$(whoami)' >> /etc/profile.d/ziggy.sh && \
     echo 'ziggy ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/ziggy  && \
-    sudo -u ziggy /opt/intel/oneapi/intelpython/latest/bin/conda init bash
+    su ziggy /opt/intel/oneapi/intelpython/latest/bin/conda init bash
     
 #ENV SHELL=/bin/bash \
 #    LANG=C.UTF-8  \
