@@ -80,7 +80,8 @@ RUN groupadd ziggy && \
     useradd  -d /home/ziggy -g ziggy -m -s /bin/bash ziggy -u 1001 && \
     echo 'export USER=$(whoami)' >> /etc/profile.d/ziggy.sh && \
     echo 'ziggy ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/ziggy  && \
-    su ziggy /opt/intel/oneapi/intelpython/latest/bin/conda init bash
+    su ziggy && \
+    echo 'source /opt/intel/oneapi/setvars.sh && conda activate' > /home/ziggy/.bash_profile
     
 #ENV SHELL=/bin/bash \
 #    LANG=C.UTF-8  \
