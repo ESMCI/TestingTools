@@ -90,6 +90,7 @@ RUN  wget -q https://parallel-netcdf.github.io/Release/pnetcdf-${PNETCDF_VERSION
      ./configure --prefix=/usr/local && \
      make -j 2 install && \
      ldconfig && \
+     cd && \
      rm -rf /tmp/sources
 
 #RUN groupadd escomp && \
